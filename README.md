@@ -22,7 +22,7 @@ Before running the project, you will need the following requirements:
 You can install the requirements using the following commands:
 
 ```bash
-pip install fastapi uvicorn scikit-learn  # or any other necessary dependencies
+pip install fastapi uvicorn scikit-learn joblib
 ```
 
 # Running the Project
