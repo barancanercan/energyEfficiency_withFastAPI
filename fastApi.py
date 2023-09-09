@@ -4,8 +4,8 @@ import joblib
 
 app = FastAPI()
 
-# Doğru dosya yolunu kullanarak eğitilmiş modeli yükleyin
-model = joblib.load("/home/baran/Desktop/PythonProjeleri/EnergyEfficiency/your_trained_model.joblib")
+# Load the trained model using the correct file path
+model = joblib.load("/home/baran/Desktop/PythonProjects/EnergyEfficiency/your_trained_model.joblib")
 
 class InputData(BaseModel):
     X1: float
@@ -20,15 +20,15 @@ class InputData(BaseModel):
     y2: float
 
 class OutputData(BaseModel):
-    prediction: float  # Bu alanı modelinizin çıkışına uyacak şekilde değiştirin
+    prediction: float  # Modify this field to match your model's output
 
 @app.get("/")
 def root():
-    return {"message": "Energy Efficiency Prediction API'ye hoş geldiniz!"}
+    return {"message": "Welcome to the Energy Efficiency Prediction API!"}
 
 @app.post("/predict-y1/", response_model=OutputData)
 def predict_y1(input_data: InputData):
-    # Model için girdi verisini bir sözlük olarak hazırlayın
+    # Prepare the input data for the model as a dictionary
     input_dict = {
         "X1": input_data.X1,
         "X2": input_data.X2,
@@ -40,17 +40,17 @@ def predict_y1(input_data: InputData):
         "X8": input_data.X8,
     }
 
-    # Modelinizi kullanarak y1 tahminini yapın
+    # Make a prediction for y1 using your model
     prediction1 = model.predict([list(input_dict.values())])[0]
 
-    # Çıkış verisini oluşturun
+    # Create the output data
     output_data1 = {"prediction": prediction1}
 
     return output_data1
 
 @app.post("/predict-y2/", response_model=OutputData)
 def predict_y2(input_data: InputData):
-    # Model için girdi verisini bir sözlük olarak hazırlayın
+    # Prepare the input data for the model as a dictionary
     input_dict = {
         "X1": input_data.X1,
         "X2": input_data.X2,
@@ -62,10 +62,10 @@ def predict_y2(input_data: InputData):
         "X8": input_data.X8,
     }
 
-    # Modelinizi kullanarak y2 tahminini yapın
+    # Make a prediction for y2 using your model
     prediction2 = model.predict([list(input_dict.values())])[1]
 
-    # Çıkış verisini oluşturun
+    # Create the output data
     output_data2 = {"prediction": prediction2}
 
     return output_data2
